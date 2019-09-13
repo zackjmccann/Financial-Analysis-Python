@@ -12,7 +12,7 @@ profit_losses = []
 total_pl = 0
 
 #Read into the budget data file
-with open(pybank_csv, 'r') as csvfile:
+with open(pybank_csv, 'r', newline="") as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
     next(csvreader, None)
     for row in csvreader:
@@ -25,16 +25,12 @@ with open(pybank_csv, 'r') as csvfile:
     num_of_months = (str(len(months)))
     pro_loss_total = (str(total_pl))
 
-#Zip the new data together
-# cleaned_file = zip(num_of_months, pro_loss_total)
-cleaned_file = zip([num_of_months], [pro_loss_total])
-
 #Create a new csv document for the results
 analyzed_data = os.path.join("pybank_analyzed.csv")
 
 #Write the new file
-with open(analyzed_data, 'w') as data:
-    writer = csv.writer(data)
-    # writer.writerow(["months",'pro_loss_total'])
-    # writer.writerow([pro_loss_total])
-    writer.writerows(cleaned_file)
+with open(analyzed_data, "w", newline="") as data:
+    writer = csv.writer(data, delimiter=',')
+    writer.writerow(["Financial Analysis"])
+    writer.writerow(["Total Months: " + num_of_months])
+    writer.writerow(["Toatl Profit/Loss: " + pro_loss_total])
