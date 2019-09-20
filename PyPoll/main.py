@@ -14,9 +14,6 @@ voter_cand = []
 candidate = []
 cand_votes = []
 
-#Functions
-
-
 #Read into the election data file
 with open(pypoll_csv, 'r', newline="") as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
@@ -38,13 +35,23 @@ with open(pypoll_csv, 'r', newline="") as csvfile:
     for x in Counter(voter_cand).values():
         cand_votes.append(x)
 
-    can_one = (str(candidate[0])) + " " +(str(cand_votes[0]))
-    can_two = (str(candidate[1])) + " " +(str(cand_votes[1]))
-    can_three = (str(candidate[2])) + " " +(str(cand_votes[2]))
-    can_four = (str(candidate[3])) + " " +(str(cand_votes[3]))
+
+    #Calculate the percentage of total votes each candidate recevied
+    total = sum(cand_votes)
+    percent_one = (str(round(((cand_votes[0]/total)*100),2)))
+    percent_two = (str(round(((cand_votes[1]/total)*100),2)))
+    percent_three = (str(round(((cand_votes[2]/total)*100),2)))
+    percent_four = (str(round(((cand_votes[3]/total)*100),2)))
+
+
+
+    can_one = ((str(candidate[0])) + ": " + percent_one + "%" + " " + "(" + (str(cand_votes[0])) + ")")
+    can_two = ((str(candidate[1])) + ": " + percent_two + "%" + " " + "(" + (str(cand_votes[1])) + ")")
+    can_three = ((str(candidate[2])) + ": " + percent_three + "%" + " " +"(" + (str(cand_votes[2])) + ")")
+    can_four = ((str(candidate[3])) + ": " + percent_four + "%" + " " +"(" + (str(cand_votes[3])) + ")")
 
     #Calculate the Winner
-    
+    winner = max(cand_votes)
 
 #Create a new csv document for the results
 analyzed_data = os.path.join("pypoll_analyzed.csv")
@@ -52,9 +59,13 @@ analyzed_data = os.path.join("pypoll_analyzed.csv")
 #Write the new file
 with open(analyzed_data, "w", newline="") as data:
     writer = csv.writer(data, delimiter=',')
-    writer.writerow(["Election Analysis"])
+    writer.writerow(["Election Results"])
     writer.writerow(["Total Votes: " + num_of_votes])
+    writer.writerow(["---------------------"])
+    writer.writerow(["Candidates"])
     writer.writerow([can_one])
     writer.writerow([can_two])
     writer.writerow([can_three])
     writer.writerow([can_four])
+    writer.writerow(["---------------------"])
+    writer.writerow(["Winner: " + (str(winner))])
