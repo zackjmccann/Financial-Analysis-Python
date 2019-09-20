@@ -43,12 +43,10 @@ with open(pypoll_csv, 'r', newline="") as csvfile:
     percent_three = (str(round(((cand_votes[2]/total)*100),2)))
     percent_four = (str(round(((cand_votes[3]/total)*100),2)))
 
-
-
-    can_one = ((str(candidate[0])) + ": " + percent_one + "%" + " " + "(" + (str(cand_votes[0])) + ")")
-    can_two = ((str(candidate[1])) + ": " + percent_two + "%" + " " + "(" + (str(cand_votes[1])) + ")")
-    can_three = ((str(candidate[2])) + ": " + percent_three + "%" + " " +"(" + (str(cand_votes[2])) + ")")
-    can_four = ((str(candidate[3])) + ": " + percent_four + "%" + " " +"(" + (str(cand_votes[3])) + ")")
+    can_one = f"{str(candidate[0])}: {percent_one}% ({str(cand_votes[0])})"
+    can_two = f"{str(candidate[1])}: {percent_two}% ({str(cand_votes[1])})"
+    can_three = f"{str(candidate[2])}: {percent_three}% ({str(cand_votes[2])})"
+    can_four = f"{str(candidate[3])}: {percent_four}% ({str(cand_votes[3])})"
 
     #Calculate the Winner
     winner = max(cand_votes)
@@ -60,7 +58,7 @@ analyzed_data = os.path.join("pypoll_analyzed.csv")
 with open(analyzed_data, "w", newline="") as data:
     writer = csv.writer(data, delimiter=',')
     writer.writerow(["Election Results"])
-    writer.writerow(["Total Votes: " + num_of_votes])
+    writer.writerow([f"Total Votes: {num_of_votes}"])
     writer.writerow(["---------------------"])
     writer.writerow(["Candidates"])
     writer.writerow([can_one])
@@ -68,4 +66,4 @@ with open(analyzed_data, "w", newline="") as data:
     writer.writerow([can_three])
     writer.writerow([can_four])
     writer.writerow(["---------------------"])
-    writer.writerow(["Winner: " + (str(winner))])
+    writer.writerow([f"Winner: {str(winner)}"])
