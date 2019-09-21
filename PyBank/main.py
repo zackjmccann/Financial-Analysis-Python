@@ -24,27 +24,6 @@ def average_change(pro_loss):
             current_month += 1
             prev_month += 1
 
-def increase(changes):
-    greatest_increase = 0
-    value = 0
-    for x in changes:
-        while value <= 84:
-            if changes[value] > greatest_increase:
-                greatest_increase = changes[value]
-            value += 1
-    return greatest_increase
-
-def decrease(changes):
-    greatest_decrease = 0
-    value = 0
-    for x in changes:
-        while value <= 84:
-            if changes[value] < greatest_decrease:
-                greatest_decrease = changes[value]
-            value += 1
-    return greatest_decrease
-
-
 #Read into the budget data file
 with open(pybank_csv, 'r', newline="") as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
@@ -63,7 +42,7 @@ with open(pybank_csv, 'r', newline="") as csvfile:
     num_of_months = (str(len(months)))
 
     #Calculate the total profit loss
-    pro_loss_total = (str(total_pl))
+    pro_loss_total = (str("$ %0.2f" % total_pl))
 
     #Calculate the average change
     average_change(profit_loss)
@@ -72,8 +51,19 @@ with open(pybank_csv, 'r', newline="") as csvfile:
         sum_change += change
 
     avg_change = (str(round((sum_change/85),2)))
-    grt_increase = (str(increase(change_list)))
-    grt_decrease = (str(decrease(change_list)))
+
+    #Increase
+    grt_increase_amount = (str(max(change_list)))
+    grt_increase_index = (change_list.index(max(change_list)))
+    grt_increase_month = months[grt_increase_index + 1]
+
+    #Decrease
+    # grt_decrease = (str(min(change_list)))
+
+    grt_decrease_amount = (str(min(change_list)))
+    grt_decrease_index = (change_list.index(min(change_list)))
+    grt_decrease_month = months[grt_decrease_index + 1]
+
 
 #Create a new csv document for the results
 analyzed_data = os.path.join("pybank_analyzed.csv")
@@ -83,7 +73,7 @@ with open(analyzed_data, "w", newline="") as data:
     writer = csv.writer(data, delimiter=',')
     writer.writerow(["Financial Analysis"])
     writer.writerow(["Total Months: " + num_of_months])
-    writer.writerow(["Total Profit/Loss: $" + pro_loss_total])
-    writer.writerow(["Average Profit/Loss Change: $" + avg_change])
-    writer.writerow(["Greatest Increase in Profits: $" + grt_increase])
-    writer.writerow(["Greatest Decrease in Profits: $" + grt_decrease])
+    writer.writerow(["Total Profit/Loss: " + pro_loss_total])
+    writer.writerow(["Average Change: $" + avg_change])
+    writer.writerow(["Greatest Increase in Profits: " + grt_increase_month + grt_increase_amount])
+    writer.writerow(["Greatest Decrease in Profits: " + grt_decrease_month + grt_decrease_amount])
