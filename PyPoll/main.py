@@ -22,7 +22,6 @@ with open(pypoll_csv, 'r', newline="") as csvfile:
     #Place all data in list
     for row in csvreader:
             voter_id.append(row[0])
-            # county.append(row[1])
             voter_cand.append(row[2])
 
     #Calculate the number of votes
@@ -49,8 +48,8 @@ with open(pypoll_csv, 'r', newline="") as csvfile:
     can_four = f"{str(candidate[3])}: {percent_four}% ({str(cand_votes[3])})"
 
     #Calculate the Winner
-    winner = max(cand_votes)
-
+    winner_votes = cand_votes.index(max(cand_votes))
+    winner_name = candidate[winner_votes]
 #Create a new csv document for the results
 analyzed_data = os.path.join("pypoll_analyzed.csv")
 
@@ -60,10 +59,10 @@ with open(analyzed_data, "w", newline="") as data:
     writer.writerow(["Election Results"])
     writer.writerow([f"Total Votes: {num_of_votes}"])
     writer.writerow(["---------------------"])
-    writer.writerow(["Candidates"])
     writer.writerow([can_one])
     writer.writerow([can_two])
     writer.writerow([can_three])
     writer.writerow([can_four])
     writer.writerow(["---------------------"])
-    writer.writerow([f"Winner: {str(winner)}"])
+    writer.writerow([f"Winner: {str(winner_name)}"])
+    writer.writerow(["---------------------"])
