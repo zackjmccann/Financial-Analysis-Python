@@ -75,5 +75,5 @@ with open(analyzed_data, "w", newline="") as data:
     writer.writerow(["Total Months: " + num_of_months])
     writer.writerow(["Total Profit/Loss: " + pro_loss_total])
     writer.writerow(["Average Change: $" + avg_change])
-    writer.writerow(["Greatest Increase in Profits: " + grt_increase_month + grt_increase_amount])
-    writer.writerow(["Greatest Decrease in Profits: " + grt_decrease_month + grt_decrease_amount])
+    writer.writerow([f"Greatest Increase in Profits: {grt_increase_month} (${grt_increase_amount})"])
+    writer.writerow([f"Greatest Decrease in Profits: {grt_decrease_month}  (${grt_decrease_amount})"])
